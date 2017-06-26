@@ -4,6 +4,10 @@ import PropTypes from 'prop-types'
 import './Browser.css'
 
 class Browser extends Component {
+  componentDidMount = () => {
+    this.props.setupIframeRef(this.iframe)
+  }
+
   loadHandler = () => {
     this.props.loadHandler()
   }
@@ -15,6 +19,7 @@ class Browser extends Component {
           className="Broswer__frame"
           height="100%"
           onLoad={this.loadHandler}
+          ref={(iframe) => this.iframe = iframe}
           src="https://projects.raspberrypi.org"
           title="Projects Browser Frame"
           width="100%"
@@ -25,7 +30,8 @@ class Browser extends Component {
 }
 
 Browser.propTypes = {
-  loadHandler: PropTypes.func.isRequired,
+  loadHandler:    PropTypes.func.isRequired,
+  setupIframeRef: PropTypes.func.isRequired,
 }
 
 export default Browser

@@ -21,8 +21,12 @@ class App extends Component {
     browserWindow.setTitle(this.state.toolbarTitle)
   }
 
+  browserLoadHandler = () => {
+    return null
+  }
+
   browserHomeButtonHandler = () => {
-    browserWindow.loadURL(this.state.defaultUrl)
+    this.iframe.src = this.state.defaultUrl
   }
 
   dockButtonClickHandler = (position) => {
@@ -43,6 +47,10 @@ class App extends Component {
     return null
   }
 
+  setupIframeRef = (iframe) => {
+    this.iframe = iframe
+  }
+
   setToolbarTitleHandler = (toolbarTitle) => {
     this.setState({
       toolbarTitle: toolbarTitle,
@@ -59,6 +67,7 @@ class App extends Component {
         />
         <Browser
           loadHandler={this.browserLoadHandler}
+          setupIframeRef={this.setupIframeRef}
         />
       </div>
     )
