@@ -25,6 +25,14 @@ class App extends Component {
     return null
   }
 
+  browserBackButtonHandler = () => {
+    // this.iframe.contentWindow.history.back(-1)
+  }
+
+  browserForwardButtonHandler = () => {
+    // this.iframe.contentWindow.history.back(1)
+  }
+
   browserHomeButtonHandler = () => {
     this.iframe.src = this.state.defaultUrl
   }
@@ -61,6 +69,8 @@ class App extends Component {
     return (
       <div className="App">
         <Toolbar
+          browserBackButtonHandler={this.browserBackButtonHandler}
+          browserForwardButtonHandler={this.browserForwardButtonHandler}
           browserHomeButtonHandler={this.browserHomeButtonHandler}
           dockButtonClickHandler={this.dockButtonClickHandler}
           title={this.state.toolbarTitle}

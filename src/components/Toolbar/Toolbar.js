@@ -2,14 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Toolbar = ({
+  browserBackButtonHandler,
+  browserForwardButtonHandler,
   browserHomeButtonHandler,
   dockButtonClickHandler,
   title,
 }) =>
   <div className="Toolbar">
-    <button>Back</button>
-    <button>Forward</button>
-    <button onClick={() => browserHomeButtonHandler() }>Home</button>
+    <button onClick={() => browserBackButtonHandler()}>Back</button>
+    <button onClick={() => browserForwardButtonHandler()}>Forward</button>
+    <button onClick={() => browserHomeButtonHandler()}>Home</button>
 
     <span>{title}</span>
 
@@ -19,9 +21,11 @@ const Toolbar = ({
   </div>
 
 Toolbar.propTypes = {
-  browserHomeButtonHandler: PropTypes.func.isRequired,
-  dockButtonClickHandler:   PropTypes.func.isRequired,
-  title:                    PropTypes.string.isRequired,
+  browserBackButtonHandler:    PropTypes.func.isRequired,
+  browserForwardButtonHandler: PropTypes.func.isRequired,
+  browserHomeButtonHandler:    PropTypes.func.isRequired,
+  dockButtonClickHandler:      PropTypes.func.isRequired,
+  title:                       PropTypes.string.isRequired,
 }
 
 export default Toolbar
