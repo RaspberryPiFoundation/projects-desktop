@@ -19,7 +19,9 @@ class Browser extends Component {
           className="Broswer__frame"
           height="100%"
           onLoad={this.loadHandler}
-          ref={(iframe) => this.iframe = iframe}
+          ref={(iframe) => {
+            this.iframe = iframe
+          }}
           src="https://projects.raspberrypi.org"
           title="Projects Browser Frame"
           width="100%"
