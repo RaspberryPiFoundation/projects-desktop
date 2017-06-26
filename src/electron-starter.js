@@ -18,10 +18,14 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({
+    height: 600,
+    width:  800,
+    title:  '',
+  })
 
   // and load the index.html of the app.
-  mainWindow.loadURL(startUrl);
+  mainWindow.loadURL(startUrl)
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()

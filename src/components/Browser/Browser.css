@@ -1,0 +1,10 @@
+.Browser {
+  height: 100%;
+  width:  100%;
+}
+
+.Browser__frame {
+  border: none;
+  height: 100%;
+  width:  100%;
+}
