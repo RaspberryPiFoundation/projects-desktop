@@ -17,6 +17,7 @@ class App extends Component {
     super(props)
     
     this.state = {
+      defaultUrl:   'https://projects.raspberrypi.org',
       toolbarTitle: 'Raspberry Pi Projects',
     }
     
@@ -27,11 +28,11 @@ class App extends Component {
     
   }
   
-  browserLoadHandler = () => {
-    
+  browserHomeButtonHandler = () => {
+    browserWindow.loadURL(this.state.defaultUrl)
   }
   
-  browserNavigationHandler = () => {
+  browserLoadHandler = () => {
     
   }
   
@@ -59,6 +60,7 @@ class App extends Component {
     return (
       <div className="App">
         <Toolbar
+          browserHomeButtonHandler={this.browserHomeButtonHandler}
           dockButtonClickHandler={this.dockButtonClickHandler}
           title={this.state.toolbarTitle}
         />
