@@ -7,55 +7,48 @@ const electron = window.require('electron')
 const browserWindow = electron.remote.getCurrentWindow()
 const screen = electron.screen
 const display = screen.getPrimaryDisplay()
-const displayDimensions = display.workAreaSize;
-
-// const fs = electron.remote.require('fs')
-// const ipcRenderer = electron.ipcRenderer
+const displayDimensions = display.workAreaSize
 
 class App extends Component {
   constructor(props) {
     super(props)
-    
+
     this.state = {
       defaultUrl:   'https://projects.raspberrypi.org',
       toolbarTitle: 'Raspberry Pi Projects',
     }
-    
+
     browserWindow.setTitle(this.state.toolbarTitle)
   }
 
-  componentDidMount = () => {
-    
-  }
-  
   browserHomeButtonHandler = () => {
     browserWindow.loadURL(this.state.defaultUrl)
   }
-  
-  browserLoadHandler = () => {
-    
-  }
-  
+
   dockButtonClickHandler = (position) => {
-    let screenHalfway = displayDimensions.width / 2
-    
-    if (position === 'left' || position === 'full') {
-      browserWindow.setPosition(0, 0)
-    } else {
-      browserWindow.setPosition(screenHalfway, 0)
+    if (position === 'full') {
+      return browserWindow.maximize()
     }
-    
-    if (position === 'left' || position === 'right') {
-      browserWindow.setSize(screenHalfway, displayDimensions.height)
+
+    let screenHalfway = displayDimensions.width / 2 // eslint-disable-line no-magic-numbers
+
+    browserWindow.setSize(screenHalfway, displayDimensions.height, true)
+
+    if (position === 'left') {
+      browserWindow.setPosition(0, 0, true)
     } else {
-      browserWindow.setSize(displayDimensions.width, displayDimensions.height)
+      browserWindow.setPosition(screenHalfway, 0, true)
     }
+
+    return null
   }
-  
-  setToolbarTitleHandler = () => {
-    
+
+  setToolbarTitleHandler = (toolbarTitle) => {
+    this.setState({
+      toolbarTitle: toolbarTitle,
+    })
   }
-  
+
   render() {
     return (
       <div className="App">
