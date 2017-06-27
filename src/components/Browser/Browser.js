@@ -7,7 +7,7 @@ import './Browser.css'
 
 class Browser extends Component {
   componentDidMount() {
-    this.props.receiveWebviewHandler(this.webview)
+    this.props.receiveWebviewReference(this.webview)
   }
 
   render() {
@@ -35,7 +35,7 @@ class Browser extends Component {
 }
 
 Browser.propTypes = {
-  receiveWebviewHandler:   PropTypes.func.isRequired,
+  receiveWebviewReference: PropTypes.func.isRequired,
   pageTitleUpdatedHandler: PropTypes.func.isRequired,
   webviewLoadHandler:      PropTypes.func.isRequired,
 }

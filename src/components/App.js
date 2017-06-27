@@ -98,7 +98,7 @@ class App extends Component {
     })
   }
 
-  receiveWebviewHandler = (webview) => {
+  receiveWebviewReference = (webview) => {
     this.webview = webview
   }
 
@@ -167,7 +167,7 @@ class App extends Component {
         />
         <Browser
           pageTitleUpdatedHandler={this.pageTitleUpdatedHandler}
-          receiveWebviewHandler={this.receiveWebviewHandler}
+          receiveWebviewReference={this.receiveWebviewReference}
           webviewLoadHandler={this.webviewLoadHandler}
         />
       </div>
