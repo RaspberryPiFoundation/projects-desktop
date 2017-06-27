@@ -16,18 +16,22 @@ class App extends Component {
     this.state = {
       defaultUrl:   'https://projects.raspberrypi.org',
       history:      [],
-      toolbarTitle: 'Raspberry Pi Projects',
+      toolbarTitle: '',
     }
 
     browserWindow.setTitle(this.state.toolbarTitle)
   }
 
   browserBackButtonHandler = () => {
-    // this.iframe.contentWindow.history.back(-1)
+    if (this.webview.canGoBack()) {
+      this.webview.goBack()
+    }
   }
 
   browserForwardButtonHandler = () => {
-    // this.iframe.contentWindow.history.back(1)
+    if (this.webview.canGoForward()) {
+      this.webview.goForward()
+    }
   }
 
   browserHomeButtonHandler = () => {
@@ -63,9 +67,13 @@ class App extends Component {
     this.webview = webview
   }
 
-  setToolbarTitleHandler = (toolbarTitle) => {
+  pageTitleUpdatedHandler = () => {
+    let pageTitleFull = this.webview.getTitle()
+    let pageTitleSplit = pageTitleFull.split(' | ')
+    let pageTitle = pageTitleSplit[0]
+
     this.setState({
-      toolbarTitle: toolbarTitle,
+      toolbarTitle: pageTitle,
     })
   }
 
@@ -80,6 +88,7 @@ class App extends Component {
           title={this.state.toolbarTitle}
         />
         <Browser
+          pageTitleUpdatedHandler={this.pageTitleUpdatedHandler}
           receiveWebviewHandler={this.receiveWebviewHandler}
           webviewLoadHandler={this.webviewLoadHandler}
         />

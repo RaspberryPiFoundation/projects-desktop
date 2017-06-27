@@ -20,6 +20,7 @@ class Browser extends Component {
         <WebView
           autosize
           onDidStopLoading={() => this.props.webviewLoadHandler()}
+          onPageTitleUpdated={() => this.props.pageTitleUpdatedHandler()}
           ref={(webview) => {
             this.webview = webview
           }}
@@ -32,8 +33,9 @@ class Browser extends Component {
 }
 
 Browser.propTypes = {
-  receiveWebviewHandler: PropTypes.func.isRequired,
-  webviewLoadHandler:    PropTypes.func.isRequired,
+  receiveWebviewHandler:   PropTypes.func.isRequired,
+  pageTitleUpdatedHandler: PropTypes.func.isRequired,
+  webviewLoadHandler:      PropTypes.func.isRequired,
 }
 
 export default Browser
