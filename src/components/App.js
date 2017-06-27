@@ -56,10 +56,6 @@ class App extends Component {
     this.navigateToPath(defaultPath)
   }
 
-  homeButtonIsDisabled = () => {
-    return this.state.homeButtonIsDisabled
-  }
-
   dockButtonClickHandler = (position) => {
     if (position === 'full') {
       browserWindow.setPosition(0, 0)
@@ -78,6 +74,10 @@ class App extends Component {
     }
 
     return
+  }
+
+  homeButtonIsDisabled = () => {
+    return this.state.homeButtonIsDisabled
   }
 
   isStarredProject = () => {
