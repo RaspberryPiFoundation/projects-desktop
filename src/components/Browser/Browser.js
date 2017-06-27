@@ -1,30 +1,30 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import WebView from 'react-electron-web-view'
 
 import './Browser.css'
-
 class Browser extends Component {
-  componentDidMount = () => {
-    this.props.setupIframeRef(this.iframe)
-  }
-
-  loadHandler = () => {
-    this.props.loadHandler()
+  componentDidMount() {
+    this.props.receiveWebviewHandler(this.webview)
   }
 
   render() {
+    let webviewStyles = {
+      display: 'block',
+      height:  '100%',
+      width:   '100%',
+    }
+
     return (
-      <div className="Browser">
-        <iframe
-          className="Broswer__frame"
-          height="100%"
-          onLoad={this.loadHandler}
-          ref={(iframe) => {
-            this.iframe = iframe
+      <div className="c-Browser">
+        <WebView
+          autosize
+          onDidStopLoading={() => this.props.webviewLoadHandler()}
+          ref={(webview) => {
+            this.webview = webview
           }}
           src="https://projects.raspberrypi.org"
-          title="Projects Browser Frame"
-          width="100%"
+          style={webviewStyles}
         />
       </div>
     )
@@ -32,8 +32,8 @@ class Browser extends Component {
 }
 
 Browser.propTypes = {
-  loadHandler:    PropTypes.func.isRequired,
-  setupIframeRef: PropTypes.func.isRequired,
+  receiveWebviewHandler: PropTypes.func.isRequired,
+  webviewLoadHandler:    PropTypes.func.isRequired,
 }
 
 export default Browser

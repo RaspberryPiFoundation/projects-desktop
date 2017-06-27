@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Browser from './Browser/Browser.js'
-import Toolbar from './Toolbar/Toolbar.js'
+import Browser from './Browser/Browser'
+import Toolbar from './Toolbar/Toolbar'
 import './App.css'
 
 const electron = window.require('electron')
@@ -15,14 +15,11 @@ class App extends Component {
 
     this.state = {
       defaultUrl:   'https://projects.raspberrypi.org',
+      history:      [],
       toolbarTitle: 'Raspberry Pi Projects',
     }
 
     browserWindow.setTitle(this.state.toolbarTitle)
-  }
-
-  browserLoadHandler = () => {
-    return null
   }
 
   browserBackButtonHandler = () => {
@@ -34,29 +31,36 @@ class App extends Component {
   }
 
   browserHomeButtonHandler = () => {
-    this.iframe.src = this.state.defaultUrl
+    this.webview.loadURL(this.state.defaultUrl)
+  }
+
+  webviewLoadHandler = () => {
+    console.log('loaded')
+    return null
   }
 
   dockButtonClickHandler = (position) => {
     if (position === 'full') {
-      return browserWindow.maximize()
+      browserWindow.setPosition(0, 0)
+      browserWindow.setSize(displayDimensions.width, displayDimensions.height)
+      return
     }
 
     let screenHalfway = displayDimensions.width / 2 // eslint-disable-line no-magic-numbers
 
-    browserWindow.setSize(screenHalfway, displayDimensions.height, true)
+    browserWindow.setSize(screenHalfway, displayDimensions.height)
 
     if (position === 'left') {
-      browserWindow.setPosition(0, 0, true)
+      browserWindow.setPosition(0, 0)
     } else {
-      browserWindow.setPosition(screenHalfway, 0, true)
+      browserWindow.setPosition(screenHalfway, 0)
     }
 
-    return null
+    return
   }
 
-  setupIframeRef = (iframe) => {
-    this.iframe = iframe
+  receiveWebviewHandler = (webview) => {
+    this.webview = webview
   }
 
   setToolbarTitleHandler = (toolbarTitle) => {
@@ -76,8 +80,8 @@ class App extends Component {
           title={this.state.toolbarTitle}
         />
         <Browser
-          loadHandler={this.browserLoadHandler}
-          setupIframeRef={this.setupIframeRef}
+          receiveWebviewHandler={this.receiveWebviewHandler}
+          webviewLoadHandler={this.webviewLoadHandler}
         />
       </div>
     )

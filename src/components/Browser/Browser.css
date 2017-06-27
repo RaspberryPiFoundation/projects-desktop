@@ -1,10 +1,9 @@
-.Browser {
-  height: 100%;
+.c-Browser {
+  height: calc(100% - 40px);
   width:  100%;
 }
 
-.Browser__frame {
-  border: none;
+webview {
   height: 100%;
   width:  100%;
 }

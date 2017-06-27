@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import './Toolbar.css'
+
 const Toolbar = ({
   browserBackButtonHandler,
   browserForwardButtonHandler,
@@ -8,7 +10,7 @@ const Toolbar = ({
   dockButtonClickHandler,
   title,
 }) =>
-  <div className="Toolbar">
+  <div className="c-Toolbar">
     <button onClick={() => browserBackButtonHandler()}>Back</button>
     <button onClick={() => browserForwardButtonHandler()}>Forward</button>
     <button onClick={() => browserHomeButtonHandler()}>Home</button>
