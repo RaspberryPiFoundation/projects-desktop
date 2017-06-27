@@ -5,8 +5,8 @@ process.env.ELECTRON_START_URL = `http://localhost:${port}`
 
 const client = new net.Socket()
 const exec = require('child_process').exec
-
 let startedElectron = false
+
 const tryConnection = () => client.connect({ port: port }, () => {
   client.end()
   if (!startedElectron) {
@@ -15,8 +15,8 @@ const tryConnection = () => client.connect({ port: port }, () => {
   }
 })
 
-tryConnection()
-
 client.on('error', () => {
-  setTimeout(tryConnection, 100) // eslint-disable-line no-magic-numbers
+  setTimeout(tryConnection, 500) // eslint-disable-line no-magic-numbers
 })
+
+tryConnection()
