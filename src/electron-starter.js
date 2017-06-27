@@ -22,7 +22,7 @@ createWindow = () => {
     height: 600,
     icon:   path.join(__dirname, 'assets/icons/png/2048x2048.png'),
     width:  800,
-    title:  '',
+    title:  'Raspberry Pi Projects',
   })
 
   // and load the index.html of the app.

@@ -18,8 +18,6 @@ class App extends Component {
       history:      [],
       toolbarTitle: '',
     }
-
-    browserWindow.setTitle(this.state.toolbarTitle)
   }
 
   browserBackButtonHandler = () => {
