@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import WebView from 'react-electron-web-view'
 
 import './Browser.css'
+
 class Browser extends Component {
   componentDidMount() {
     this.props.receiveWebviewHandler(this.webview)
