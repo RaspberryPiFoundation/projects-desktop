@@ -21,63 +21,21 @@ class App extends Component {
     this.state = {
       backButtonIsDisabled:    true,
       currentPath:             null,
+      currentTitle:            '',
       forwardButtonIsDisabled: true,
-      starredProjects:         {},
       homeButtonIsDisabled:    true,
-      toolbarTitle:            '',
+      starredProjects:         {},
     }
   }
 
   addStarredProject = () => {
     let starredProjects = this.state.starredProjects
 
-    starredProjects[this.state.currentPath] = this.state.toolbarTitle
+    starredProjects[this.state.currentPath] = this.state.currentTitle
 
     this.setState({
       starredProjects: starredProjects,
     })
-  }
-
-  browserBackButtonHandler = () => {
-    if (this.webview.canGoBack()) {
-      this.webview.goBack()
-      this.updateNavigationState()
-    }
-  }
-
-  browserForwardButtonHandler = () => {
-    if (this.webview.canGoForward()) {
-      this.webview.goForward()
-      this.updateNavigationState()
-    }
-  }
-
-  browserHomeButtonHandler = () => {
-    this.navigateToPath(defaultPath)
-  }
-
-  dockButtonClickHandler = (position) => {
-    if (position === 'full') {
-      browserWindow.setPosition(0, 0)
-      browserWindow.setSize(displayDimensions.width, displayDimensions.height)
-      return
-    }
-
-    let screenHalfway = displayDimensions.width / 2 // eslint-disable-line no-magic-numbers
-
-    browserWindow.setSize(screenHalfway, displayDimensions.height)
-
-    if (position === 'left') {
-      browserWindow.setPosition(0, 0)
-    } else {
-      browserWindow.setPosition(screenHalfway, 0)
-    }
-
-    return
-  }
-
-  homeButtonIsDisabled = () => {
-    return this.state.homeButtonIsDisabled
   }
 
   isStarredProject = () => {
@@ -94,7 +52,7 @@ class App extends Component {
     let pageTitle = pageTitleSplit[0]
 
     this.setState({
-      toolbarTitle: pageTitle,
+      currentTitle: pageTitle,
     })
   }
 
@@ -120,11 +78,48 @@ class App extends Component {
     return this.addStarredProject()
   }
 
-  updateNavigationState = () => {
-    this.setState({
-      backButtonIsDisabled:    this.webview.canGoBack() === false,
-      forwardButtonIsDisabled: this.webview.canGoForward() === false,
-    })
+  toolbarChromeButtonClickHandler = (action) => {
+    if (action === 'close') {
+      browserWindow.close()
+    }
+
+    if (action === 'minimize') {
+      browserWindow.minimize()
+    }
+  }
+
+  toolbarDockButtonClickHandler = (position) => {
+    if (position === 'full') {
+      browserWindow.setPosition(0, 0)
+      browserWindow.setSize(displayDimensions.width, displayDimensions.height)
+      return
+    }
+
+    let screenHalfway = displayDimensions.width / 2 // eslint-disable-line no-magic-numbers
+
+    browserWindow.setSize(screenHalfway, displayDimensions.height)
+
+    if (position === 'left') {
+      browserWindow.setPosition(0, 0)
+    } else {
+      browserWindow.setPosition(screenHalfway, 0)
+    }
+
+    return
+  }
+
+  toolbarNavigationButtonClickHandler = (action) => {
+    if (action === 'back' && this.webview.canGoBack()) {
+      this.webview.goBack()
+    }
+
+    if (action === 'forward' && this.webview.canGoForward()) {
+      this.webview.goForward()
+    }
+
+    if (action === 'home') {
+      this.navigateToPath(defaultPath)
+    }
   }
 
   webviewLoadHandler = () => {
@@ -139,10 +134,12 @@ class App extends Component {
     let isHomePath = path === defaultPath
 
     this.setState({
-      currentPath:          path,
-      homeButtonIsDisabled: isHomePath,
-      isStarredProject:     this.isStarredProject(path),
-    }, () => this.updateNavigationState())
+      backButtonIsDisabled:    this.webview.canGoBack() === false,
+      currentPath:             path,
+      forwardButtonIsDisabled: this.webview.canGoForward() === false,
+      homeButtonIsDisabled:    isHomePath,
+      isStarredProject:        this.isStarredProject(path),
+    })
 
     return
   }
@@ -151,19 +148,17 @@ class App extends Component {
     return (
       <div className="App">
         <Toolbar
-          browserBackButtonHandler={this.browserBackButtonHandler}
-          browserForwardButtonHandler={this.browserForwardButtonHandler}
-          browserHomeButtonHandler={this.browserHomeButtonHandler}
           backButtonIsDisabled={this.state.backButtonIsDisabled}
-          dockButtonClickHandler={this.dockButtonClickHandler}
           forwardButtonIsDisabled={this.state.forwardButtonIsDisabled}
-          homeButtonIsDisabled={this.homeButtonIsDisabled()}
+          homeButtonIsDisabled={this.state.homeButtonIsDisabled}
           isStarredProject={this.isStarredProject()}
           navigateToPath={this.navigateToPath}
           removeStarredProject={this.removeStarredProject}
           starredProjects={this.state.starredProjects}
-          title={this.state.toolbarTitle}
           toggleStarredProject={this.toggleStarredProject}
+          toolbarChromeButtonClickHandler={this.toolbarChromeButtonClickHandler}
+          toolbarDockButtonClickHandler={this.toolbarDockButtonClickHandler}
+          toolbarNavigationButtonClickHandler={this.toolbarNavigationButtonClickHandler}
         />
         <Browser
           pageTitleUpdatedHandler={this.pageTitleUpdatedHandler}
