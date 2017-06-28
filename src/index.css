@@ -446,6 +446,16 @@ template {
   display: none;
 }
 
+* {
+  box-sizing: border-box;
+}
+
+.clearfix:after {
+  clear:   both;
+  content: '';
+  display: table;
+}
+
 html,
 body,
 #root {
