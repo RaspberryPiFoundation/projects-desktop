@@ -5,18 +5,28 @@ import PropTypes from 'prop-types'
 
 import './Toolbar.css'
 
+const starButtonClassNames = (isStarredProject) => {
+  let classNames = [
+    'c-Toolbar__button',
+    'c-Toolbar__button--star',
+  ]
+
+  if (isStarredProject) {
+    classNames.push('c-Toolbar__button--star--active')
+  }
+
+  return classNames.join(' ')
+}
+
 const Toolbar = ({
   backButtonIsDisabled,
   forwardButtonIsDisabled,
   homeButtonIsDisabled,
+  isStarredProject,
+  toggleStarredProject,
   toolbarChromeButtonClickHandler,
   toolbarDockButtonClickHandler,
   toolbarNavigationButtonClickHandler,
-  // isStarredProject,
-  // navigateToPath,
-  // toggleStarredProject,
-  // removeStarredProject,
-  // starredProjects,
 }) =>
   <div className="c-Toolbar clearfix">
     <div className="c-Toolbar__navigation clearfix">
@@ -43,18 +53,18 @@ const Toolbar = ({
       >
         <span className="c-Toolbar__button-label">Go home</span>
       </button>
+
+      <button
+        className={starButtonClassNames(isStarredProject)}
+        disabled={homeButtonIsDisabled}
+        onClick={() => toggleStarredProject()}
+      >
+        <span className="c-Toolbar__button-label">
+          {isStarredProject ? 'Add to' : 'Remove from'}
+          starred projects
+        </span>
+      </button>
     </div>
-
-    {/* <button
-      disabled={homeButtonIsDisabled}
-      onClick={() => toggleStarredProject()}
-    >{isStarredProject ? 'starred' : 'star'}</button>
-
-    <StarredProjectsDropdown
-      navigateToPath={navigateToPath}
-      removeStarredProject={removeStarredProject}
-      starredProjects={starredProjects}
-    /> */}
 
     <div className="c-Toolbar__window-controls clearfix">
       <button
@@ -99,11 +109,8 @@ Toolbar.propTypes = {
   forwardButtonIsDisabled:             PropTypes.bool.isRequired,
   homeButtonIsDisabled:                PropTypes.bool.isRequired,
   isStarredProject:                    PropTypes.bool.isRequired,
-  navigateToPath:                      PropTypes.func.isRequired,
-  removeStarredProject:                PropTypes.func.isRequired,
-  starredProjects:                     PropTypes.object.isRequired,
   toggleStarredProject:                PropTypes.func.isRequired,
-  toolbarChromeButtonClickHandler: PropTypes.func.isRequired,
+  toolbarChromeButtonClickHandler:     PropTypes.func.isRequired,
   toolbarDockButtonClickHandler:       PropTypes.func.isRequired,
   toolbarNavigationButtonClickHandler: PropTypes.func.isRequired,
 }
