@@ -1,3 +1,4 @@
+const fs = require('fs')
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
@@ -14,11 +15,14 @@ let mainWindow
 
 createWindow = () => {
   mainWindow = new BrowserWindow({
-    frame:  process.platform !== 'darwin',
-    height: 600,
-    icon:   path.join(__dirname, 'assets/icons/png/2048x2048.png'),
-    width:  800,
-    title:  'Raspberry Pi Projects',
+    frame:          process.platform !== 'darwin',
+    height:         600,
+    icon:           path.join(__dirname, 'assets/icons/png/2048x2048.png'),
+    width:          800,
+    title:          'Raspberry Pi Projects',
+    webPreferences: {
+      plugins: true,
+    },
   })
 
   mainWindow.loadURL(startUrl)
@@ -28,6 +32,12 @@ createWindow = () => {
   })
 
   // require('./electron-menus')
+}
+
+if (fs.existsSync('/usr/lib/chromium-browser/libpepflashplayer.so')) {
+  app.commandLine.appendSwitch('ppapi-flash-path', '/usr/lib/chromium-browser/libpepflashplayer.so')
+} else if (fs.existsSync('/usr/lib/chromium/libpepflashplayer.so')) {
+  app.commandLine.appendSwitch('ppapi-flash-path', '/usr/lib/chromium/libpepflashplayer.so')
 }
 
 app.on('ready', createWindow)
