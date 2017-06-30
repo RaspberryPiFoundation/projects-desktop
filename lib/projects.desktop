@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Projects
+TryExec=/usr/lib/electron/electron
+Exec=sh /usr/bin/projects-desktop.sh
+Icon=rpi
+Terminal=false
+Categories=Applications;Development;
+X-Desktop-File-Install-Version=0.22
