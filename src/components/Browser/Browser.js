@@ -26,7 +26,7 @@ class Browser extends Component {
           ref={(webview) => {
             this.webview = webview
           }}
-          src="https://projects.raspberrypi.org"
+          src={this.props.defaultUrl}
           style={webviewStyles}
         />
       </div>
@@ -35,6 +35,7 @@ class Browser extends Component {
 }
 
 Browser.propTypes = {
+  defaultUrl:              PropTypes.string.isRequired,
   receiveWebviewReference: PropTypes.func.isRequired,
   pageTitleUpdatedHandler: PropTypes.func.isRequired,
   webviewLoadHandler:      PropTypes.func.isRequired,

@@ -170,6 +170,7 @@ class App extends Component {
           toolbarNavigationButtonClickHandler={this.toolbarNavigationButtonClickHandler}
         />
         <Browser
+          defaultUrl={defaultUrl}
           pageTitleUpdatedHandler={this.pageTitleUpdatedHandler}
           receiveWebviewReference={this.receiveWebviewReference}
           webviewLoadHandler={this.webviewLoadHandler}
