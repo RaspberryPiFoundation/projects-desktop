@@ -24,8 +24,17 @@ class App extends Component {
       currentTitle:            '',
       forwardButtonIsDisabled: true,
       homeButtonIsDisabled:    true,
+      mac:                     false,
       starredProjects:         {},
     }
+  }
+
+  componentDidMount() {
+    browserWindow.setHasShadow(false)
+
+    this.setState({
+      mac: !browserWindow.hasShadow(),
+    }, () => browserWindow.setHasShadow(true))
   }
 
   addStarredProject = () => {
@@ -146,7 +155,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div className={`c-App ${this.state.mac ? 'c-App--frameless' : 'c-App--framed'}`}>
         <Toolbar
           backButtonIsDisabled={this.state.backButtonIsDisabled}
           forwardButtonIsDisabled={this.state.forwardButtonIsDisabled}

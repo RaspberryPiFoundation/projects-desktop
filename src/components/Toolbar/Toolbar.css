@@ -3,7 +3,7 @@
   border-bottom:      1px solid #ccc;
   height:             40px;
   padding:            10px;
-  -webkit-app-region: drag
+  -webkit-app-region: drag;
 }
 
 .c-Toolbar__navigation {
@@ -72,4 +72,14 @@
   padding:  0;
   position: absolute;
   width:    1px;
+}
+
+.c-App--framed .c-Toolbar {
+  -webkit-app-region: none;
+}
+
+.c-App--framed .c-Toolbar__button--minimise,
+.c-App--framed .c-Toolbar__button--dock-full,
+.c-App--framed .c-Toolbar__button--close {
+  display: none;
 }
