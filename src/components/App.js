@@ -30,11 +30,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    browserWindow.setHasShadow(false)
+    browserWindow.setDocumentEdited(true)
 
     this.setState({
-      mac: !browserWindow.hasShadow(),
-    }, () => browserWindow.setHasShadow(true))
+      mac: browserWindow.isDocumentEdited(),
+    })
   }
 
   addStarredProject = () => {
